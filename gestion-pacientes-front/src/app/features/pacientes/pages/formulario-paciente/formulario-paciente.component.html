@@ -1,0 +1,124 @@
+<p-card [header]="esEdicion ? 'Editar paciente' : 'Crear paciente'">
+  <div *ngIf="cargando" class="flex justify-content-center my-4">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
+  <div *ngIf="error" class="mb-3">
+    <p class="text-red-500">{{ error }}</p>
+  </div>
+
+  <form [formGroup]="formulario" (ngSubmit)="guardar()" *ngIf="!cargando">
+    <div class="grid">
+      <div class="col-12 md:col-6">
+        <label for="tipoDocumento" class="block mb-2">Tipo de documento *</label>
+        <select
+          id="tipoDocumento"
+          formControlName="tipoDocumento"
+          class="w-full p-inputtext p-component">
+          <option value="">Seleccione</option>
+          <option value="CC">CC</option>
+          <option value="CE">CE</option>
+          <option value="TI">TI</option>
+          <option value="PAS">PAS</option>
+        </select>
+        <small class="text-red-500" *ngIf="campoInvalido('tipoDocumento')">
+          El tipo de documento es obligatorio.
+        </small>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label for="numeroDocumento" class="block mb-2">Número de documento *</label>
+        <input
+          id="numeroDocumento"
+          type="text"
+          pInputText
+          formControlName="numeroDocumento"
+          class="w-full" />
+        <small class="text-red-500" *ngIf="campoInvalido('numeroDocumento')">
+          El número de documento es obligatorio.
+        </small>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label for="nombres" class="block mb-2">Nombres *</label>
+        <input
+          id="nombres"
+          type="text"
+          pInputText
+          formControlName="nombres"
+          class="w-full" />
+        <small class="text-red-500" *ngIf="campoInvalido('nombres')">
+          Los nombres son obligatorios.
+        </small>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label for="apellidos" class="block mb-2">Apellidos *</label>
+        <input
+          id="apellidos"
+          type="text"
+          pInputText
+          formControlName="apellidos"
+          class="w-full" />
+        <small class="text-red-500" *ngIf="campoInvalido('apellidos')">
+          Los apellidos son obligatorios.
+        </small>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label for="fechaNacimiento" class="block mb-2">Fecha de nacimiento *</label>
+        <input
+          id="fechaNacimiento"
+          type="date"
+          formControlName="fechaNacimiento"
+          class="w-full p-inputtext p-component" />
+        <small class="text-red-500" *ngIf="campoInvalido('fechaNacimiento')">
+          La fecha de nacimiento es obligatoria.
+        </small>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label for="telefono" class="block mb-2">Teléfono</label>
+        <input
+          id="telefono"
+          type="text"
+          pInputText
+          formControlName="telefono"
+          class="w-full" />
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label for="correoElectronico" class="block mb-2">Correo electrónico</label>
+        <input
+          id="correoElectronico"
+          type="email"
+          pInputText
+          formControlName="correoElectronico"
+          class="w-full" />
+        <small class="text-red-500" *ngIf="campoInvalido('correoElectronico')">
+          El correo electrónico no tiene un formato válido.
+        </small>
+      </div>
+    </div>
+
+    <div class="flex gap-2 mt-4">
+      <button
+        pButton
+        type="button"
+        label="Volver"
+        icon="pi pi-arrow-left"
+        class="p-button-secondary"
+        (click)="volver()">
+      </button>
+
+      <button
+        pButton
+        type="submit"
+        [label]="guardando ? 'Guardando...' : (esEdicion ? 'Actualizar' : 'Guardar')"
+        [icon]="guardando ? 'pi pi-spin pi-spinner' : 'pi pi-save'"
+        [disabled]="guardando"
+        class="p-button-success">
+      </button>
+    </div>
+  </form>
+</p-card>

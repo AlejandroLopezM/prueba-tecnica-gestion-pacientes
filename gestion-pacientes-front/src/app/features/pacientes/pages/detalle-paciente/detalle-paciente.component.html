@@ -1,0 +1,82 @@
+<p-card header="Detalle del paciente">
+  <div *ngIf="cargando" class="flex justify-content-center my-4">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
+  <div *ngIf="error" class="mb-3">
+    <p class="text-red-500">{{ error }}</p>
+  </div>
+
+  <div *ngIf="!cargando && paciente">
+    <div class="grid">
+      <div class="col-12 md:col-6">
+        <strong>Tipo documento:</strong>
+        <p>{{ paciente.tipoDocumento }}</p>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <strong>Número documento:</strong>
+        <p>{{ paciente.numeroDocumento }}</p>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <strong>Nombres:</strong>
+        <p>{{ paciente.nombres }}</p>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <strong>Apellidos:</strong>
+        <p>{{ paciente.apellidos }}</p>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <strong>Fecha nacimiento:</strong>
+        <p>{{ paciente.fechaNacimiento | date:'mediumDate' }}</p>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <strong>Teléfono:</strong>
+        <p>{{ paciente.telefono || 'Sin teléfono' }}</p>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <strong>Correo electrónico:</strong>
+        <p>{{ paciente.correoElectronico || 'Sin correo' }}</p>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <strong>Fecha creación:</strong>
+        <p>{{ paciente.fechaCreacion | date:'short' }}</p>
+      </div>
+    </div>
+
+    <h3 class="mt-4">Citas asociadas</h3>
+
+    <p-table [value]="paciente.citas" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Fecha cita</th>
+          <th>Observación</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-cita>
+        <tr>
+          <td>{{ cita.fechaCita | date:'short' }}</td>
+          <td>{{ cita.observacion || 'Sin observación' }}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="2">Este paciente no tiene citas asociadas.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div class="flex gap-2 mt-4">
+      <button pButton type="button" label="Volver" icon="pi pi-arrow-left" class="p-button-secondary" (click)="volver()"></button>
+      <button pButton type="button" label="Editar" icon="pi pi-pencil" class="p-button-warning" (click)="editar()"></button>
+    </div>
+  </div>
+</p-card>
